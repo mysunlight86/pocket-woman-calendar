@@ -1,0 +1,7 @@
+При сборке RN приложения ошибка:
+
+Task :app:transformNativeLibsWithMergeJniLibsForDebug FAILED
+
+Лечение:
+
+cd android && ./gradlew clean
