@@ -8,7 +8,7 @@ import {
   ViewPropTypes,
   Dimensions
 } from 'react-native';
-import { ProgressBarAndroid } from '@react-native-community/progress-bar-android';
+import { ProgressBar } from '@react-native-community/progress-bar-android';
 import PropTypes from 'prop-types';
 import PinKeyboard from './PinKeyboard';
 import PinDisplay from './PinDisplay';
@@ -100,7 +100,7 @@ export function PinConsole({
       <View style={Styles.frame}>
         {
           status === STATUS_BUSY
-            ? <ProgressBarAndroid styleAttr="Large" />
+            ? <ProgressBar />
             : (
               <Text
                 style={status === STATUS_ERROR ? Styles.warning : null}
