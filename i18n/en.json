@@ -4,6 +4,9 @@
     "Calendar": "Calendar",
     "About": "About",
     "Statistics": "Statistics",
-    "Settings": "Settings",
-    "Lock": "Lock"
+    "Lock": "Lock",
+    "#settings-screen": "Settings",
+    "#settings-security-header": "Security",
+    "#settings-security-text": "You can change your pin code here.",
+    "#settings-security-change-pin-button": "Change PIN"
 }

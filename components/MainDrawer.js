@@ -42,7 +42,7 @@ export default function MainDrawer({ navigation }) {
           underlayColor="gray"
           style={styles.menuItem}
         >
-          <Text>{i18n.t('Settings')}</Text>
+          <Text>{i18n.t('#settings-screen')}</Text>
         </TouchableHighlight>
 
         <TouchableHighlight

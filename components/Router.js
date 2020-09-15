@@ -53,7 +53,7 @@ export default function Router() {
                     name="settings"
                     component={SettingsScreen}
                     options={{
-                      title: i18n.t('Settings'),
+                      title: i18n.t('#settings-screen'),
                       tabBarIcon: () => (<Icon name="settings" />)
                     }}
                   />
