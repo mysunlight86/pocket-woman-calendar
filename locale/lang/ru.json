@@ -1,0 +1,8 @@
+{
+  "#settings-screen": "Настройки",
+  "#settings-security-header": "Безопасность",
+  "#settings-security-text": "Используйте личный PIN код для обеспечения безопасности данных.",
+  "Set PIN": "Установить PIN",
+  "Remove PIN": "Убрать PIN",
+  "Change PIN": "Сменить PIN"
+}

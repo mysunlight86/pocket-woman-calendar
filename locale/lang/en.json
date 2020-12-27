@@ -1,0 +1,13 @@
+{
+    "#settings-screen": "Settings",
+    "#settings-security-header": "Security",
+    "#settings-security-text": "Use PIN code to protect your data.",
+    "#settings-set-pin": "Set PIN",
+    "#settings-remove-pin": "Remove PIN",
+    "#settings-change-pin": "Change PIN",
+    "#enter-pin-message": "Enter PIN code:",
+    "#enter-new-pin-message": "Enter new PIN code:",
+    "#reenter-new-pin-message": "Enter new PIN code again:",
+    "#new-pin-not-match-error": "Entered PIN code does not match",
+    "#wrong-pin-error": "Wrong PIN code"
+}
