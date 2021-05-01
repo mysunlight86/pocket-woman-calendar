@@ -5,6 +5,6 @@ import recordsReducer from '../features/records/recordsSlice';
 export default configureStore({
   reducer: {
     protection: protectionReducer,
-    records: recordsReducer
-  }
+    records: recordsReducer,
+  },
 });
