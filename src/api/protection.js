@@ -3,10 +3,10 @@ import AsyncStorage from '@react-native-community/async-storage';
 const attemptDelay = 1000;
 const attemptDelayMax = 5000;
 
-const delay = attempt => new Promise(resolve => setTimeout(
-  resolve,
-  Math.min(attemptDelayMax, attempt * attemptDelay)
-));
+const delay = attempt =>
+  new Promise(resolve =>
+    setTimeout(resolve, Math.min(attemptDelayMax, attempt * attemptDelay))
+  );
 
 const getAttempt = async () => +(await AsyncStorage.getItem('@attempt')) || 0;
 const setAttempt = attempt => AsyncStorage.setItem('@attempt', String(attempt));
@@ -29,18 +29,16 @@ export function discard(user, token) {
 export async function checkPin(pin) {
   const attempt = pin === null ? 0 : await getAttempt();
   await delay(attempt);
-  if (pin === await getPin()) {
+  if (pin === (await getPin())) {
     await removeAttempt();
     return true;
   }
-  if (pin !== null) {
-    await setAttempt(attempt + 1);
-  }
+  if (pin !== null) await setAttempt(attempt + 1);
   return false;
 }
 
 export async function getToken(pin) {
-  if (!await checkPin(pin)) return null;
+  if (!(await checkPin(pin))) return null;
   const token = String(Math.random());
   tokens.add(token);
   return token;

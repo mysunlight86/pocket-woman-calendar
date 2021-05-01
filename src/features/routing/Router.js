@@ -5,13 +5,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { useSelector } from 'react-redux';
 
-import DrawerScreen from './app/DrawerScreen';
-import MainScreen from './app/MainScreen';
-import SettingsScreen from './features/settings/SettingsScreen';
-import LockScreen from './features/protection/LockScreen';
-import SetPinScreen from './features/protection/SetPinScreen';
+import DrawerScreen from '../../app/DrawerScreen';
+import MainScreen from '../../app/MainScreen';
+import SettingsScreen from '../settings/SettingsScreen';
+import LockScreen from '../protection/LockScreen';
+import SetPinScreen from '../protection/SetPinScreen';
+import LoadingScreen from '../protection/LoadingScreen';
 
-import { selectProtection } from './features/protection/protectionSlice';
+import { selectProtection } from '../protection/protectionSlice';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -25,7 +26,9 @@ function NestedDrawer() {
 }
 
 export default function Router() {
-  const { token } = useSelector(selectProtection);
+  const { token, isLoading } = useSelector(selectProtection);
+
+  if (isLoading) return <LoadingScreen />;
 
   return (
     <NavigationContainer>
@@ -48,14 +51,14 @@ export default function Router() {
               component={SettingsScreen}
               options={{
                 headerShown: true,
-                title: t('#settings-screen')
+                title: t('#settings-screen'),
               }}
             />
             <Stack.Screen
               name="set-pin"
               component={SetPinScreen}
               options={{
-                title: t('#settings-set-pin')
+                title: t('#settings-set-pin'),
               }}
             />
           </>

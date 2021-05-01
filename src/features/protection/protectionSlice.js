@@ -1,89 +1,80 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { protection as api } from '../../api';
 
-export const IDLE = 'idle';
-export const LOADING = 'loading';
-export const FAILED = 'failed';
-export const SUCCESSFUL = 'successful';
-
-const initialState = {
-  token: null,
-  isProtected: false,
-  error: null,
-  status: IDLE,
-};
-
 export const selectProtection = state => state.protection;
 
-export const login = createAsyncThunk('protection/login', async (
-  { pin },
-  { rejectWithValue }
-) => {
-  const token = await api.getToken(pin);
-  return !token
-    ? rejectWithValue({ pin })
-    : { token, pin };
-});
+export const signIn = createAsyncThunk(
+  'protection/singIn',
+  async ({ pin }) => ({
+    token: await api.getToken(pin),
+    pin,
+  })
+);
 
-export const changePin = createAsyncThunk('protection/changePin', async (
-  { oldPin, newPin },
-  { rejectWithValue }
-) => {
-  const token = await api.changePin(oldPin, newPin);
-  return !token
-    ? rejectWithValue({ pin: oldPin })
-    : { token, pin: newPin };
-});
+export const signOut = createAsyncThunk(
+  'protection/singOut',
+  (args, { getState }) => {
+    const { token } = selectProtection(getState());
+    api.discard(token);
+  }
+);
+
+export const changePin = createAsyncThunk(
+  'protection/changePin',
+  async ({ oldPin, newPin }) => ({
+    token: await api.changePin(oldPin, newPin),
+    pin: newPin,
+  })
+);
 
 export const protectionSlice = createSlice({
   name: 'protection',
-  initialState,
-  reducers: {
-    tokenDiscarded(state) {
-      state.token = null;
-      state.status = IDLE;
-      state.error = null;
-    }
+
+  initialState: {
+    token: null,
+    error: null,
+    isLoading: true,
   },
+
+  reducers: {},
+
   extraReducers: {
-    [login.pending]: state => { state.status = LOADING; },
-    [login.fulfilled]: (state, { payload: { token, pin } }) => {
-      state.token = token;
-      state.status = SUCCESSFUL;
-      state.isProtected = pin !== null;
-      state.error = null;
+    [signIn.pending]: state => {
+      state.isLoading = true;
     },
-    [login.rejected]: (state, { error, payload: { pin } }) => {
-      state.token = null;
-      state.status = pin ? FAILED : IDLE;
-      state.isProtected = true;
+    [signIn.fulfilled]: (state, { payload: { token, pin } }) => {
+      state.token = token;
       state.error = null;
-      if (error && error.message !== 'Rejected') {
-        state.error = error;
-      }
+      state.isLoading = false;
+      if (!token && pin !== null) state.error = 'Invalid PIN';
+    },
+    [signIn.rejected]: (state, { error }) => {
+      state.token = null;
+      state.isLoading = false;
+      state.error = null;
+      if (error && error.message !== 'Rejected') state.error = error.message;
     },
 
-    [changePin.pending]: state => { state.status = LOADING; },
-    [changePin.fulfilled]: (state, { payload: { token, pin } }) => {
-      state.token = token;
-      state.status = SUCCESSFUL;
-      state.isProtected = pin !== null;
+    [signOut.fulfilled]: state => {
+      state.token = null;
       state.error = null;
+      state.isLoading = false;
+    },
+
+    [changePin.pending]: state => {
+      state.isLoading = true;
+    },
+    [changePin.fulfilled]: (state, { payload: { token, pin } }) => {
+      state.error = null;
+      state.isLoading = false;
+      if (token !== null) state.error = 'Invalid PIN code';
     },
     [changePin.rejected]: (state, { error }) => {
       state.token = null;
-      state.status = FAILED;
-      state.error = error;
-    }
-  }
+      state.isLoading = false;
+      if (error) state.error = error.message;
+    },
+  },
 });
-
-export const { tokenDiscarded } = protectionSlice.actions;
-
-export const logout = () => (dispatch, getState) => {
-  const { token } = selectProtection(getState);
-  api.discard(token);
-  dispatch(tokenDiscarded());
-};
 
 export default protectionSlice.reducer;

@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 
 import initLocale from '../locale';
 import store from './app/store';
-import Router from './Router';
+import Router from './features/routing/Router';
 
 initLocale();
 

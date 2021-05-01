@@ -9,5 +9,6 @@
     "#enter-new-pin-message": "Enter new PIN code:",
     "#reenter-new-pin-message": "Enter new PIN code again:",
     "#new-pin-not-match-error": "Entered PIN code does not match",
-    "#wrong-pin-error": "Wrong PIN code"
+    "#wrong-pin-error": "Wrong PIN code",
+    "Please Wait": "Please Wait"
 }
