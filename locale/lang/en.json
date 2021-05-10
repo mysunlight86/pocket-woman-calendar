@@ -1,5 +1,4 @@
 {
-    "#settings-screen": "Settings",
     "#settings-security-header": "Security",
     "#settings-security-text": "Use PIN code to protect your data.",
     "#settings-set-pin": "Set PIN",
@@ -10,5 +9,20 @@
     "#reenter-new-pin-message": "Enter new PIN code again:",
     "#new-pin-not-match-error": "Entered PIN code does not match",
     "#wrong-pin-error": "Wrong PIN code",
-    "Please Wait": "Please Wait"
+    "Please Wait": "Please Wait",
+    "PIN Code": "PIN Code",
+    "Invalid PIN code": "Invalid PIN code",
+    "Enter PIN code": "Enter PIN code",
+    "Enter PIN code:": "Enter PIN code:",
+    "Enter new PIN code:": "Enter new PIN code:",
+    "Repeat new PIN code:": "Repeat new PIN code:",
+    "Change PIN code": "Change PIN code",
+    "Set PIN code": "Set PIN code",
+    "Remove PIN code": "Remove PIN code",
+    "Create": "Create",
+    "Change": "Change",
+    "Remove": "Remove",
+    "Done": "Done",
+    "Sign Out": "Sign Out",
+    "Settings": "Settings"
 }

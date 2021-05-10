@@ -1,80 +1,83 @@
+import { t } from 'i18n-js';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { protection as api } from '../../api';
+import * as security from '../../api/security';
+
+const initialState = {
+  isLoaded: false,
+  isBusy: true,
+  isProtected: false,
+  token: null,
+  error: null,
+};
 
 export const selectProtection = state => state.protection;
+
+export const probe = createAsyncThunk('protection/probe', async () => ({
+  token: await security.getToken(null),
+}));
 
 export const signIn = createAsyncThunk(
   'protection/singIn',
   async ({ pin }) => ({
-    token: await api.getToken(pin),
-    pin,
+    token: await security.getToken(pin),
   })
-);
-
-export const signOut = createAsyncThunk(
-  'protection/singOut',
-  (args, { getState }) => {
-    const { token } = selectProtection(getState());
-    api.discard(token);
-  }
 );
 
 export const changePin = createAsyncThunk(
   'protection/changePin',
   async ({ oldPin, newPin }) => ({
-    token: await api.changePin(oldPin, newPin),
-    pin: newPin,
+    success: await security.changePin(oldPin, newPin),
   })
 );
 
+function handlePending(state) {
+  state.isBusy = true;
+}
+
+function handleRejection(state, { error }) {
+  state.isBusy = false;
+  state.error = error && error.message;
+}
+
 export const protectionSlice = createSlice({
   name: 'protection',
+  initialState,
 
-  initialState: {
-    token: null,
-    error: null,
-    isLoading: true,
+  reducers: {
+    signOut: state => {
+      state.isBusy = false;
+      state.token = null;
+      state.error = null;
+    },
   },
 
-  reducers: {},
-
   extraReducers: {
-    [signIn.pending]: state => {
-      state.isLoading = true;
-    },
-    [signIn.fulfilled]: (state, { payload: { token, pin } }) => {
-      state.token = token;
+    [probe.fulfilled]: (state, { payload }) => {
+      state.isLoaded = true;
+      state.isBusy = false;
+      state.isProtected = payload.token === null;
+      state.token = payload.token;
       state.error = null;
-      state.isLoading = false;
-      if (!token && pin !== null) state.error = 'Invalid PIN';
-    },
-    [signIn.rejected]: (state, { error }) => {
-      state.token = null;
-      state.isLoading = false;
-      state.error = null;
-      if (error && error.message !== 'Rejected') state.error = error.message;
     },
 
-    [signOut.fulfilled]: state => {
-      state.token = null;
-      state.error = null;
-      state.isLoading = false;
+    [signIn.pending]: handlePending,
+    [signIn.rejected]: handleRejection,
+    [signIn.fulfilled]: (state, { payload }) => {
+      state.isBusy = false;
+      state.token = payload.token;
+      state.error = !payload.token ? t('Invalid PIN code') : null;
     },
 
-    [changePin.pending]: state => {
-      state.isLoading = true;
-    },
-    [changePin.fulfilled]: (state, { payload: { token, pin } }) => {
-      state.error = null;
-      state.isLoading = false;
-      if (token !== null) state.error = 'Invalid PIN code';
-    },
-    [changePin.rejected]: (state, { error }) => {
-      state.token = null;
-      state.isLoading = false;
-      if (error) state.error = error.message;
+    [changePin.pending]: handlePending,
+    [changePin.rejected]: handleRejection,
+    [changePin.fulfilled]: (state, { payload, meta }) => {
+      state.isBusy = false;
+      if (payload.success) state.isProtected = meta.arg.newPin !== null;
+      state.error = !payload.success ? t('Invalid PIN code') : null;
     },
   },
 });
+
+export const { signOut } = protectionSlice.actions;
 
 export default protectionSlice.reducer;

@@ -1,19 +1,25 @@
 import { t } from 'i18n-js';
 import React, { useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { useDispatch } from 'react-redux';
 
-import { signIn } from '../protection/protectionSlice';
+import { probe } from '../protection/protectionSlice';
 
-import Styles from '../../Styles';
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 
 export default function LoadingScreen() {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(signIn({ pin: null }));
+    dispatch(probe());
   });
   return (
-    <View style={Styles.screen}>
+    <View style={styles.screen}>
       <Text>{t('Please Wait')}</Text>
     </View>
   );

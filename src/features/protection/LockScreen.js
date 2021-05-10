@@ -1,39 +1,44 @@
-import React, { useEffect } from 'react';
 import { t } from 'i18n-js';
+import React, { useRef } from 'react';
+import { StyleSheet, View, Text } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  login, selectProtection,
-  IDLE, LOADING, FAILED
-} from './protectionSlice';
-import PinConsole from './PinConsole';
+
+import PinInput from './PinInput';
+import { signIn, selectProtection } from './protectionSlice';
+
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 
 export default function LockScreen() {
-  const { isProtected, error, status } = useSelector(selectProtection);
   const dispatch = useDispatch();
+  const { isBusy, error } = useSelector(selectProtection);
+  const pinInputRef = useRef(null);
 
-  let message = t('#enter-pin-message');
-  if (status === FAILED) {
-    message = t('#wrong-pin-error');
-  }
+  const getMessage = () => {
+    if (isBusy) return t('Please Wait');
+    if (error) return error;
+    return t('Enter PIN code');
+  };
 
-  useEffect(() => {
-    if (!isProtected && status === IDLE) {
-      dispatch(login({ pin: null }));
-    }
-  });
-
-  const onPinEntered = (pin, reset) => {
-    reset();
-    dispatch(login({ pin }));
+  const handleSubmit = async pin => {
+    await dispatch(signIn({ pin }));
+    pinInputRef.current.clear();
   };
 
   return (
-    <PinConsole
-      message={message}
-      isLoading={status === LOADING}
-      error={error && error.message}
-      pinLength={4}
-      onPinEntered={onPinEntered}
-    />
+    <View style={styles.screen}>
+      <Text>{getMessage()}</Text>
+      <PinInput
+        ref={pinInputRef}
+        autoFocus={true}
+        editable={!isBusy}
+        onSubmit={handleSubmit}
+      />
+    </View>
   );
 }
