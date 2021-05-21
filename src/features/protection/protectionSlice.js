@@ -1,6 +1,6 @@
 import { t } from 'i18n-js';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import * as security from '../../api/security';
+import * as security from '../../common/security';
 
 const initialState = {
   isLoaded: false,

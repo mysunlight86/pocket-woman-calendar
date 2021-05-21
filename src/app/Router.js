@@ -5,13 +5,13 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { useSelector } from 'react-redux';
 
-import LoadingScreen from './features/protection/LoadingScreen';
-import DrawerScreen from './features/routing/DrawerScreen';
-import MainScreen from './app/MainScreen';
-import SettingsScreen from './features/settings/SettingsScreen';
-import LockScreen from './features/protection/LockScreen';
+import LoadingScreen from '../features/protection/LoadingScreen';
+import DrawerScreen from '../features/routing/DrawerScreen';
+import MainScreen from './MainScreen';
+import SettingsScreen from '../features/settings/SettingsScreen';
+import LockScreen from '../features/protection/LockScreen';
 
-import { selectProtection } from './features/protection/protectionSlice';
+import { selectProtection } from '../features/protection/protectionSlice';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();

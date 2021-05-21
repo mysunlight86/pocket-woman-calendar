@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { protectedStorage as api } from '../../api';
+import { protectedStorage as api } from '../../common';
 import { selectProtection } from '../protection/protectionSlice';
 
 const initialState = {
