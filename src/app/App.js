@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 
-import initLocale from '../../locale';
+import initLocale from '../common/locale';
 import store from './store';
 import Router from './Router';
 

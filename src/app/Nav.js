@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import PropTypes from 'prop-types';
-import styles from './Styles';
+import styles from '../common/Styles';
 
 export default function Nav({ onHamburgerPress }) {
   return (
