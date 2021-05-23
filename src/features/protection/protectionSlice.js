@@ -10,7 +10,7 @@ const initialState = {
   error: null,
 };
 
-export const selectIsLoaded = state => state.protection.isLoded;
+export const selectIsLoaded = state => state.protection.isLoaded;
 export const selectIsBusy = state => state.protection.isBusy;
 export const selectIsProtected = state => state.protection.isProtected;
 export const selectToken = state => state.protection.token;
