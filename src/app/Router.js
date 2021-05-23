@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 
 import LoadingScreen from '../features/protection/LoadingScreen';
 import DrawerScreen from '../features/routing/DrawerScreen';
-import MainScreen from './MainScreen';
+import MainScreen from '../features/mainScreen/MainScreen';
 import SettingsScreen from '../features/settings/SettingsScreen';
 import LockScreen from '../features/protection/LockScreen';
 
