@@ -6,7 +6,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { useSelector } from 'react-redux';
 
 import LoadingScreen from '../features/protection/LoadingScreen';
-import DrawerScreen from '../features/routing/DrawerScreen';
+import DrawerScreen from '../features/mainScreen/DrawerScreen';
 import MainScreen from '../features/mainScreen/MainScreen';
 import SettingsScreen from '../features/settings/SettingsScreen';
 import LockScreen from '../features/protection/LockScreen';

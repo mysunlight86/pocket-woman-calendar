@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Text, View, Button, StyleSheet } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { Text, View, StyleSheet } from 'react-native';
 
-import Nav from '../../app/Nav';
-
-import { signOut } from '../protection/protectionSlice';
+import Nav from './Nav';
+import { name as appName } from '../../../app.json';
 
 const styles = StyleSheet.create({
   mainScreen: {
@@ -16,17 +14,10 @@ const styles = StyleSheet.create({
 });
 
 export default function MainScreen({ navigation: { openDrawer } }) {
-  const dispatch = useDispatch();
   return (
     <View style={styles.mainScreen}>
-      <Nav onHamburgerPress={() => openDrawer()} />
+      <Nav onHamburgerPress={() => openDrawer()} title={appName} />
       <Text>Hello World!</Text>
-      <Button
-        title="sign out"
-        onPress={() => {
-          dispatch(signOut());
-        }}
-      />
     </View>
   );
 }
