@@ -4,7 +4,7 @@ import { StyleSheet, View, Text } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
 import PinInput from './PinInput';
-import { signIn, selectProtection } from './protectionSlice';
+import { signIn, selectIsBusy, selectProtectionError } from './protectionSlice';
 
 const styles = StyleSheet.create({
   screen: {
@@ -16,7 +16,8 @@ const styles = StyleSheet.create({
 
 export default function LockScreen() {
   const dispatch = useDispatch();
-  const { isBusy, error } = useSelector(selectProtection);
+  const isBusy = useSelector(selectIsBusy);
+  const error = useSelector(selectProtectionError);
   const pinInputRef = useRef(null);
 
   const getMessage = () => {

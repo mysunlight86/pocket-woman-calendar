@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { protectedStorage as api } from '../../common';
-import { selectProtection } from '../protection/protectionSlice';
+import { selectToken } from '../protection/protectionSlice';
 
 const initialState = {
   isLoaded: false,
@@ -13,7 +13,7 @@ export const selectIsLoaded = state => state.records.isLoaded;
 export const selectRecords = state => state.records.records;
 
 export const load = createAsyncThunk('records/load', async (arg, { dispatch, getState }) => {
-  const { token } = selectProtection(getState());
+  const token = selectToken(getState());
   const rawData = await api.get({ token, key: 'records' });
   dispatch({
     type: 'records/added',

@@ -10,7 +10,11 @@ const initialState = {
   error: null,
 };
 
-export const selectProtection = state => state.protection;
+export const selectIsLoaded = state => state.protection.isLoded;
+export const selectIsBusy = state => state.protection.isBusy;
+export const selectIsProtected = state => state.protection.isProtected;
+export const selectToken = state => state.protection.token;
+export const selectProtectionError = state => state.protection.error;
 
 export const probe = createAsyncThunk('protection/probe', async () => ({
   token: await security.getToken(null),

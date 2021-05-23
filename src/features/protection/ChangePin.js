@@ -1,11 +1,11 @@
 import { t } from 'i18n-js';
 import React, { useState, useRef } from 'react';
-import { Button, View, Text, StyleSheet } from 'react-native';
+import { Button, View, StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { unwrapResult } from '@reduxjs/toolkit';
 
 import PinInput from './PinInput';
-import { selectProtection, changePin } from './protectionSlice';
+import { changePin, selectIsBusy, selectIsProtected } from './protectionSlice';
 
 const styles = StyleSheet.create({
   buttonsRow: {
@@ -19,7 +19,8 @@ const pinRx = /\d{4}/;
 
 export default function ChangePin() {
   const dispatch = useDispatch();
-  const { isBusy, isProtected } = useSelector(selectProtection);
+  const isBusy = useSelector(selectIsBusy);
+  const isProtected = useSelector(selectIsProtected);
 
   const oldPinRef = useRef(null);
   const newPinRef = useRef(null);

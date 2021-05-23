@@ -3,7 +3,7 @@ import React from 'react';
 import { ScrollView, Text, StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
 
-import { selectProtection } from '../protection/protectionSlice';
+import { selectIsProtected } from '../protection/protectionSlice';
 import ChangePin from '../protection/ChangePin';
 import RemovePin from '../protection/RemovePin';
 
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
 });
 
 export default function SettingsScreen() {
-  const { isProtected } = useSelector(selectProtection);
+  const isProtected = useSelector(selectIsProtected);
   return (
     <ScrollView style={styles.screen}>
       <Text>{t('PIN Code')}</Text>

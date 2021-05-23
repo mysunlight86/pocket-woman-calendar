@@ -11,7 +11,10 @@ import MainScreen from './MainScreen';
 import SettingsScreen from '../features/settings/SettingsScreen';
 import LockScreen from '../features/protection/LockScreen';
 
-import { selectProtection } from '../features/protection/protectionSlice';
+import {
+  selectIsLoaded,
+  selectToken,
+} from '../features/protection/protectionSlice';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -25,7 +28,8 @@ function NestedDrawer() {
 }
 
 export default function Router() {
-  const { token, isLoaded } = useSelector(selectProtection);
+  const isLoaded = useSelector(selectIsLoaded);
+  const token = useSelector(selectToken);
 
   if (!isLoaded) return <LoadingScreen />;
 
