@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Text, View, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 
 import Nav from './Nav';
 import { name as appName } from '../../../app.json';
+import Calendar from '../calendar/Calendar';
 
 const styles = StyleSheet.create({
   mainScreen: {
@@ -17,7 +18,7 @@ export default function MainScreen({ navigation: { openDrawer } }) {
   return (
     <View style={styles.mainScreen}>
       <Nav onHamburgerPress={() => openDrawer()} title={appName} />
-      <Text>Hello World!</Text>
+      <Calendar />
     </View>
   );
 }

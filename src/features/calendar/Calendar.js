@@ -1,7 +1,5 @@
-import { connect } from 'react-redux';
+import React from 'react';
 import { CalendarList } from 'react-native-calendars';
-import { selectMarks } from './selectors';
-import { dayPressed } from './actions';
 
 /*
 
@@ -24,13 +22,6 @@ Props:
 
 */
 
-const mapStateToProps = state => ({
-  markedDates: selectMarks(state),
-  markingType: 'period'
-});
-
-const mapDispatchToProps = {
-  onDayPress: ({ dateString }) => dayPressed(dateString)
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(CalendarList);
+export default function Calendar() {
+  return <CalendarList />;
+}
