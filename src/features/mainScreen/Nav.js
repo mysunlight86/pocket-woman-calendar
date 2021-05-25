@@ -9,12 +9,14 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     alignSelf: 'stretch',
-    height: 40,
+    height: 50,
   },
 
   hamburgerButton: {
-    height: 40,
+    height: 50,
+    width: 50,
     justifyContent: 'center',
+    alignItems: 'center',
     padding: 5,
   },
 });
