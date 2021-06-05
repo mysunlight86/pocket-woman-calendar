@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { View, StyleSheet } from 'react-native';
 
 import Nav from './Nav';
-import { name as appName } from '../../../app.json';
+import { displayName } from '../../../app.json';
 import Calendar from '../calendar/Calendar';
 
 const styles = StyleSheet.create({
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
 export default function MainScreen({ navigation: { openDrawer } }) {
   return (
     <View style={styles.mainScreen}>
-      <Nav onHamburgerPress={() => openDrawer()} title={appName} />
+      <Nav onHamburgerPress={() => openDrawer()} title={displayName} />
       <Calendar />
     </View>
   );

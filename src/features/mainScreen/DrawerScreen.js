@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { View, Text, StyleSheet } from 'react-native';
 
-import { name as appName } from '../../../app.json';
+import { displayName } from '../../../app.json';
 import DrawerButton from './DrawerButton';
 import SignOutButton from './SignOutButton';
 
@@ -37,7 +37,7 @@ export default function DrawerScreen({ navigation }) {
   return (
     <View style={styles.drawer}>
       <View style={styles.block}>
-        <Text style={styles.header}>{appName}</Text>
+        <Text style={styles.header}>{displayName}</Text>
       </View>
 
       <View style={styles.footerBlock}>
