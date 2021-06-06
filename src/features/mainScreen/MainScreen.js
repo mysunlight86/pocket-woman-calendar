@@ -4,7 +4,7 @@ import { View, StyleSheet } from 'react-native';
 
 import Nav from './Nav';
 import { displayName } from '../../../app.json';
-import Calendar from '../calendar/Calendar';
+import Calendar from '../marks/Calendar';
 
 const styles = StyleSheet.create({
   mainScreen: {
