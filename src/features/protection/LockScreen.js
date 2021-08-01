@@ -26,7 +26,7 @@ export default function LockScreen() {
     return t('Enter PIN code');
   };
 
-  const handleSubmit = async pin => {
+  const handleSubmit = async ({ nativeEvent: { text: pin } }) => {
     await dispatch(signIn({ pin }));
     pinInputRef.current.clear();
   };
@@ -38,7 +38,7 @@ export default function LockScreen() {
         ref={pinInputRef}
         autoFocus={true}
         editable={!isBusy}
-        onSubmit={handleSubmit}
+        onSubmitEditing={handleSubmit}
       />
     </View>
   );

@@ -1,16 +1,16 @@
 import React from 'react';
-import { Provider } from 'react-redux';
 
 import initLocale from '../common/locale';
-import store from './store';
-import Router from './Router';
+import AuthState from '../Component/AuthState';
+
+import AuthProvider from '../features/auth/AuthProvider';
 
 initLocale();
 
 export default function App() {
   return (
-    <Provider store={store}>
-      <Router />
-    </Provider>
+    <AuthProvider>
+      <AuthState />
+    </AuthProvider>
   );
 }

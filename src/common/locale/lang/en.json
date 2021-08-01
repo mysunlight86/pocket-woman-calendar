@@ -11,7 +11,7 @@
     "#wrong-pin-error": "Wrong PIN code",
     "Please Wait": "Please Wait",
     "PIN Code": "PIN Code",
-    "Invalid PIN code": "Invalid PIN code",
+    "Wrong PIN code! Try again.": "Wrong PIN code! Try again.",
     "Enter PIN code": "Enter PIN code",
     "Enter PIN code:": "Enter PIN code:",
     "Enter new PIN code:": "Enter new PIN code:",

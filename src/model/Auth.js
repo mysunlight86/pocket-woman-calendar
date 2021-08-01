@@ -12,10 +12,10 @@ export function verifyToken(token) {
   return _currentState.token === token;
 }
 
-export async function getToken(pin) {
+export async function getToken(pin = '') {
   const storedPin = await getStoredPin();
-  if (pin === null && pin === storedPin) return _currentState.token;
-  if (pin === null && pin !== storedPin) return null;
+  if (isEmptyPin(pin) && storedPin === null) return _currentState.token;
+  if (isEmptyPin(pin)) return null;
 
   await delayAttempt();
 
@@ -28,14 +28,22 @@ export async function getToken(pin) {
   return null;
 }
 
-module.exports.changePin = async function changePin(oldPin, newPin) {
+export function isPinValid(pin) {
+  if (isEmptyPin(pin)) return true;
+  if (typeof pin !== 'string') return false;
+  return /^\d{4}$/.test(pin);
+}
+
+export async function changePin(oldPin, newPin) {
   const token = await getToken(oldPin);
   if (!token) return null;
   if (!isPinValid(newPin)) return null;
   await setStoredPin(newPin);
   updateState({ token: generateToken() });
   return _currentState.token;
-};
+}
+
+const isEmptyPin = pin => pin === '' || pin === null;
 
 function updateState(partialState) {
   _currentState = { ..._currentState, ...partialState };
@@ -45,19 +53,13 @@ function generateToken() {
   return Math.random().toString(16);
 }
 
-function isPinValid(pin) {
-  if (pin === null) return true;
-  if (typeof pin !== 'string') return false;
-  return /^\d{4}$/.test(pin);
-}
-
 async function getStoredPin() {
   const pin = await EncryptedStorage.getItem(STORAGE_KEY);
   return pin || null;
 }
 
 async function setStoredPin(pin) {
-  if (pin === null) {
+  if (isEmptyPin(pin)) {
     await EncryptedStorage.removeItem(STORAGE_KEY);
     return;
   }

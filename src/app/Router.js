@@ -1,23 +1,26 @@
-import React from 'react';
-import { t } from 'i18n-js';
+import React, { useContext } from 'react';
+
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { useSelector } from 'react-redux';
 
-import LoadingScreen from '../features/protection/LoadingScreen';
+import { t } from 'i18n-js';
+
+import AuthContext from '../features/auth/AuthContext';
+
 import DrawerScreen from '../features/mainScreen/DrawerScreen';
 import MainScreen from '../features/mainScreen/MainScreen';
 import SettingsScreen from '../features/settings/SettingsScreen';
-import LockScreen from '../features/protection/LockScreen';
+import LockScreen from '../features/auth/LockScreen';
+import AuthState from '../Component/AuthState';
+import PinValidatorScreen from '../features/auth/PinValidatorScreen';
+import ChangePinScreen from '../features/auth/ChangePinScreen';
 
-import {
-  selectIsLoaded,
-  selectToken,
-} from '../features/protection/protectionSlice';
+import withPinValidation from '../features/auth/withPinValidation';
 
-const Stack = createStackNavigator();
+const RootStack = createStackNavigator();
 const Drawer = createDrawerNavigator();
+const SecureChangePinScreen = withPinValidation(ChangePinScreen);
 
 function NestedDrawer() {
   return (
@@ -28,24 +31,51 @@ function NestedDrawer() {
 }
 
 export default function Router() {
-  const isLoaded = useSelector(selectIsLoaded);
-  const token = useSelector(selectToken);
+  const { token } = useContext(AuthContext);
+  const context = useContext(AuthContext);
 
-  if (!isLoaded) return <LoadingScreen />;
-
-  // TODO: remove set-pin
+  console.log('context', context);
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <RootStack.Navigator>
         {token === null ? (
-          <Stack.Screen
+          <RootStack.Screen
             name="lock-screen"
             component={LockScreen}
             options={{ headerShown: false }}
           />
         ) : (
           <>
+            <RootStack.Group>
+              <RootStack.Screen
+                name="main"
+                component={AuthState}
+                options={{ headerShown: false }}
+              />
+            </RootStack.Group>
+
+            <RootStack.Group screenOptions={{ presentation: 'modal' }}>
+              <RootStack.Screen
+                name="ChangePin"
+                component={SecureChangePinScreen}
+                options={({ route: { params: { title } = {} } }) => ({ title })}
+              />
+
+              <RootStack.Screen
+                name="PinValidator"
+                component={PinValidatorScreen}
+              />
+            </RootStack.Group>
+          </>
+        )}
+      </RootStack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+/*
+<>
             <Stack.Screen
               name="main"
               component={NestedDrawer}
@@ -60,8 +90,5 @@ export default function Router() {
               }}
             />
           </>
-        )}
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-}
+
+          */

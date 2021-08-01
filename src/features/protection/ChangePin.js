@@ -83,7 +83,7 @@ export default function ChangePin() {
         editable={!isBusy}
         hasError={!isNewPinValid}
         onChangeText={setNewPin}
-        onSubmit={() => {
+        onSubmitEditing={() => {
           repeatPinRef.current.focus();
         }}
       />
@@ -93,7 +93,7 @@ export default function ChangePin() {
         editable={!isBusy}
         hasError={!isNewPinValid}
         onChangeText={setRepeatPin}
-        onSubmit={handleSubmit}
+        onSubmitEditing={handleSubmit}
       />
       <View style={styles.buttonsRow}>
         <Button
