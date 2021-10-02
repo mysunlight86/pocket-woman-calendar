@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Button } from 'react-native';
+import { useNavigation } from '@react-navigation/core';
 
 import styles from './styles';
 import * as API from '../model/Auth';
@@ -26,6 +27,16 @@ export default function AuthDebugScreen() {
 
   const [authState] = useAuth();
 
+  const navigation = useNavigation();
+
+  const handleOpenMBXClick = () => {
+    navigation.navigate('MessageBox', {
+      title: 'Hello Message Box!',
+      message: 'Hello World! This is the Message',
+      buttonCaption: 'Done',
+    });
+  };
+
   return (
     <View style={styles.screen}>
       <Text>Debug Auth Status</Text>
@@ -37,6 +48,7 @@ export default function AuthDebugScreen() {
       <Text>{`STATE token ${authState.token}`}</Text>
       <Text>{`STATE authorized ${authState.token !== null}`}</Text>
       <PinInput title="Debug PIN:" />
+      <Button title="Open MBX" onPress={handleOpenMBXClick} />
     </View>
   );
 }
