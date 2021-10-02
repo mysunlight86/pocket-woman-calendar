@@ -1,12 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, Text, TextInput } from 'react-native';
-
-import styles from './styles';
+import { View, Text, TextInput, StyleSheet } from 'react-native';
 
 const pinRx = /^\d{0,4}$/;
 
-export default class PinInputNew extends React.Component {
+export default class PinInput extends React.Component {
   static propTypes = {
     title: PropTypes.string,
     value: PropTypes.string,
@@ -29,6 +27,18 @@ export default class PinInputNew extends React.Component {
     super(props);
     this.ref = React.createRef();
     this.state = { value: '' };
+    this.styles = StyleSheet.create({
+      input: {
+        minWidth: 100,
+      },
+      field: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+      },
+      inputBorder: { color: '#000000' },
+      inputErrorBorder: { color: '#ff0000' },
+    });
   }
 
   get value() {
@@ -38,7 +48,6 @@ export default class PinInputNew extends React.Component {
   }
 
   focus() {
-    console.log('focus');
     return this.ref.current.focus();
   }
 
@@ -51,13 +60,15 @@ export default class PinInputNew extends React.Component {
   }
 
   isFocused() {
-    return this.ref.current.blur();
+    return this.ref.current.isFocused();
   }
 
-  renderInput() {
+  render() {
     const { hasError } = this.props;
 
-    return (
+    const title = !this.props.title ? null : <Text>{this.props.title}</Text>;
+
+    const input = (
       <TextInput
         {...this.props}
         keyboardType="numeric"
@@ -68,21 +79,21 @@ export default class PinInputNew extends React.Component {
         selectTextOnFocus={true}
         value={this.value}
         ref={this.ref}
-        style={styles.input}
+        style={this.styles.input}
         underlineColorAndroid={
-          hasError ? styles.inputErrorBorder.color : styles.inputBorder.color
+          hasError
+            ? this.styles.inputErrorBorder.color
+            : this.styles.inputBorder.color
         }
         onChangeText={this.handleTextChange}
         onFocus={this.handleFocus}
       />
     );
-  }
 
-  render() {
     return (
-      <View style={styles.field}>
-        {this.renderTitle()}
-        {this.renderInput()}
+      <View style={this.styles.field}>
+        {title}
+        {input}
       </View>
     );
   }
@@ -99,11 +110,4 @@ export default class PinInputNew extends React.Component {
       this.clear();
     }
   };
-
-  renderTitle() {
-    if (!this.props.title) {
-      return null;
-    }
-    return <Text>{this.props.title}</Text>;
-  }
 }

@@ -4,6 +4,8 @@ import { View, Text } from 'react-native';
 import styles from './styles';
 import * as API from '../model/Auth';
 
+import PinInput from '../features/auth/PinInput';
+
 export default function AuthDebugScreen() {
   const [isLoading, setLoading] = useState(true);
   const [isProtected, setProtected] = useState(false);
@@ -27,6 +29,9 @@ export default function AuthDebugScreen() {
       <Text>{`isProtected: ${isProtected}`}</Text>
       <Text>{`token: ${token}`}</Text>
       <Text>{`is token valid: ${isValidToken}`}</Text>
+
+      <Text>Password Input debug</Text>
+      <PinInput title="Debug PIN:" />
     </View>
   );
 }
