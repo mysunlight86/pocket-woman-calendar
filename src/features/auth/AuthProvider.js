@@ -1,4 +1,4 @@
-import React, { useReducer, useMemo, createContext } from 'react';
+import React, { useReducer, useMemo, createContext, useContext } from 'react';
 import PropTypes from 'prop-types';
 
 const initialState = {
@@ -6,11 +6,11 @@ const initialState = {
   token: null,
 };
 
+export const AuthContext = createContext([initialState, () => {}]);
+
 const reducer = (state, { payload }) => {
   return { ...state, ...payload };
 };
-
-export const AuthContext = createContext([initialState, () => {}]);
 
 export function AuthProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -19,7 +19,14 @@ export function AuthProvider({ children }) {
 }
 
 AuthProvider.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.arrayOf(PropTypes.element),
+  ]).isRequired,
 };
+
+export function useAuth() {
+  return useContext(AuthContext);
+}
 
 export default AuthProvider;
