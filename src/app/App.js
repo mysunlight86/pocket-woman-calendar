@@ -1,16 +1,10 @@
 import React from 'react';
 
 import initLocale from '../common/locale';
-import AuthState from '../Component/AuthState';
-
-import AuthProvider from '../features/auth/AuthProvider';
+import AuthDebugScreen from '../common/AuthDebugScreen';
 
 initLocale();
 
 export default function App() {
-  return (
-    <AuthProvider>
-      <AuthState />
-    </AuthProvider>
-  );
+  return <AuthDebugScreen />;
 }
