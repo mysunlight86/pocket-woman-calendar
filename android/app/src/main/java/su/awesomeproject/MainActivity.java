@@ -1,4 +1,4 @@
-package com.malokhatko.pocketwomancalendar;
+package su.malokhatko.pocketwomancalendar;
 
 import com.facebook.react.ReactActivity;
 
