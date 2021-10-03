@@ -6,6 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import initLocale from '../common/locale';
 import AuthProvider from '../features/auth/AuthProvider';
 import AuthDebugScreen from '../common/AuthDebugScreen';
+import PinRequestBlock from '../features/auth/PinRequestBlock';
 import MessageBox from '../common/MessageBox';
 
 initLocale();
@@ -22,6 +23,11 @@ export default function App() {
               name="Main"
               component={AuthDebugScreen}
               options={{ headerShown: false }}
+            />
+
+            <RootStack.Screen
+              name="PinRequestBlock"
+              component={PinRequestBlock}
             />
           </RootStack.Group>
 

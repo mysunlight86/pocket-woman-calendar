@@ -37,6 +37,10 @@ export default function AuthDebugScreen() {
     });
   };
 
+  const handlePWD = () => {
+    navigation.navigate('PinRequestBlock');
+  };
+
   return (
     <View style={styles.screen}>
       <Text>Debug Auth Status</Text>
@@ -49,6 +53,7 @@ export default function AuthDebugScreen() {
       <Text>{`STATE authorized ${authState.token !== null}`}</Text>
       <PinInput title="Debug PIN:" />
       <Button title="Open MBX" onPress={handleOpenMBXClick} />
+      <Button title="Open PWD" onPress={handlePWD} />
     </View>
   );
 }
