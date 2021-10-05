@@ -6,7 +6,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import initLocale from '../common/locale';
 import AuthProvider from '../features/auth/AuthProvider';
 import AuthDebugScreen from '../common/AuthDebugScreen';
-import PinRequestBlock from '../features/auth/PinRequestBlock';
+import PinRequest from '../features/auth/PinRequest';
+import ChangePinScreen from '../features/auth/ChangePinScreen';
 import MessageBox from '../common/MessageBox';
 
 initLocale();
@@ -25,9 +26,11 @@ export default function App() {
               options={{ headerShown: false }}
             />
 
+            <RootStack.Screen name="PinRequest" component={PinRequest} />
+
             <RootStack.Screen
-              name="PinRequestBlock"
-              component={PinRequestBlock}
+              name="ChangePinScreen"
+              component={ChangePinScreen}
             />
           </RootStack.Group>
 

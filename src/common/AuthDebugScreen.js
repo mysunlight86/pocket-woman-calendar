@@ -38,7 +38,11 @@ export default function AuthDebugScreen() {
   };
 
   const handlePWD = () => {
-    navigation.navigate('PinRequestBlock');
+    navigation.navigate('PinRequest');
+  };
+
+  const handleChangePin = () => {
+    navigation.navigate('ChangePinScreen');
   };
 
   return (
@@ -54,6 +58,7 @@ export default function AuthDebugScreen() {
       <PinInput title="Debug PIN:" />
       <Button title="Open MBX" onPress={handleOpenMBXClick} />
       <Button title="Open PWD" onPress={handlePWD} />
+      <Button title="Open Change PIN" onPress={handleChangePin} />
     </View>
   );
 }
